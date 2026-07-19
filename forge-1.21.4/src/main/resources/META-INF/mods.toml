@@ -9,14 +9,14 @@ license="All Rights Reserved"
 #clientSideOnly=true #optional, default=false
 
 [[mods]]
-modId="examplemod"
+modId="sethomemod"
 version="1.0.0"
-displayName="Example Mod"
+displayName="TpSetHome"
 #updateJSONURL="https://example.com/updates.json" #optional
 #displayURL="https://example.com/" #optional
 #logoFile="examplemod.png" #optional
 #credits="" #optional
-authors="YourNameHere, OtherNameHere" #optional
+authors="NolanLaBanane415" #optional
 #displayTest="MATCH_VERSION" #optional, default=MATCH_VERSION when not clientSideOnly, else IGNORE_ALL_VERSION
 
 # Access Transformers
@@ -25,19 +25,18 @@ authors="YourNameHere, OtherNameHere" #optional
 # Specifying an empty list when your mod has no ATs is recommended to opt-out of the default for slightly better loading performance.
 #accessTransformers = []
 
-description='''Example mod description.
-Newline characters can be used like this, and rendered on the mods screen properly.'''
+description='''Un mod utilitaire simple pour gérer des points de téléportation (homes).'''
 
-[[dependencies.examplemod]] #recommended
+[[dependencies.sethomemod]] #recommended
     modId="forge"
-    mandatory=true
-    versionRange="[0,)"
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.examplemod]] #recommended
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.21.4,1.22,)"
-    ordering="NONE"
-    side="BOTH"
+        mandatory=true
+            versionRange="[0,)"
+                ordering="NONE"
+                    side="BOTH"
+                    
+                    [[dependencies.sethomemod]] #recommended
+                        modId="minecraft"
+                            mandatory=true
+                                versionRange="[1.21.4,1.22,)"
+                                    ordering="NONE"
+                                        side="BOTH"]]]

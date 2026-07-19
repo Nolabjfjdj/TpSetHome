@@ -1,0 +1,3 @@
+rootProject.name = 'TpSetHome'
+include 'common'
+include 'forge-1.21.4'

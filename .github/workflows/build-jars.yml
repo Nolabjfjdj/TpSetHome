@@ -40,29 +40,49 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        module:
-          - forge-1.21.4
-          - forge-1.21.5
-          - fabric-1.21.4
-          - fabric-1.21.5
-          - fabric-1.21.6
-          - fabric-1.21.8
-          - fabric-1.21.3
+        include:
+          - module: forge-1.20.1
+            java-version: "17"
+            gradle-version: "8.8"
+          - module: fabric-1.20.1
+            java-version: "17"
+            gradle-version: "8.8"
+          - module: forge-1.21.4
+            java-version: "21"
+            gradle-version: "9.3.1"
+          - module: forge-1.21.5
+            java-version: "21"
+            gradle-version: "9.3.1"
+          - module: fabric-1.21.4
+            java-version: "21"
+            gradle-version: "9.3.1"
+          - module: fabric-1.21.5
+            java-version: "21"
+            gradle-version: "9.3.1"
+          - module: fabric-1.21.6
+            java-version: "21"
+            gradle-version: "9.3.1"
+          - module: fabric-1.21.8
+            java-version: "21"
+            gradle-version: "9.3.1"
+          - module: fabric-1.21.3
+            java-version: "21"
+            gradle-version: "9.3.1"
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java 21
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "21"
+          java-version: ${{ matrix.java-version }}
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "9.3.1"
+          gradle-version: ${{ matrix.gradle-version }}
 
       - name: Build mod JAR
         run: gradle --no-daemon :${{ matrix.module }}:build

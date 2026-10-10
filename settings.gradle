@@ -14,3 +14,9 @@ include 'common'
 include 'forge-1.21.4'
 include 'fabric-1.21.4'
 include 'fabric-1.21.3'
+
+include 'forge-1.21.5'
+include 'fabric-1.21.5'
+
+include 'fabric-1.21.6'
+include 'fabric-1.21.8'

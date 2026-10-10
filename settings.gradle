@@ -1,22 +1,22 @@
 pluginManagement {
-repositories {
-maven {
-name = 'Fabric'
-url = 'https://maven.fabricmc.net/'
-}
-mavenCentral()
-gradlePluginPortal()
-}
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
 }
 
 rootProject.name = 'TpSetHome'
 include 'common'
+include 'forge-1.20.1'
+include 'fabric-1.20.1'
 include 'forge-1.21.4'
 include 'fabric-1.21.4'
 include 'fabric-1.21.3'
-
 include 'forge-1.21.5'
 include 'fabric-1.21.5'
-
 include 'fabric-1.21.6'
 include 'fabric-1.21.8'

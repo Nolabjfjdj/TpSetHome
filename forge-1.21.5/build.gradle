@@ -19,7 +19,7 @@ plugins {
                 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
                 minecraft {
-                    mappings channel: 'official', version: '1.21.4'
+                    mappings channel: 'official', version: '1.21.5'
 
                         runs {
                                 configureEach {
@@ -52,7 +52,7 @@ plugins {
                                                                                                                                                                         }
 
                                                                                                                                                                         dependencies {
-                                                                                                                                                                            implementation minecraft.dependency('net.minecraftforge:forge:1.21.4-55.1.14')
+                                                                                                                                                                            implementation minecraft.dependency('net.minecraftforge:forge:1.21.5-55.1.14')
                                                                                                                                                                                 implementation project(':common')
                                                                                                                                                                                 }
 

@@ -43,10 +43,10 @@ jobs:
         include:
           - module: forge-1.20.1
             java-version: "17"
-            gradle-version: "8.8"
+            gradle-version: "8.14.3"
           - module: fabric-1.20.1
             java-version: "17"
-            gradle-version: "8.8"
+            gradle-version: "8.14.3"
           - module: forge-1.21.4
             java-version: "21"
             gradle-version: "9.3.1"

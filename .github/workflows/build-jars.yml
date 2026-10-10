@@ -42,32 +42,32 @@ jobs:
       matrix:
         include:
           - module: forge-1.20.1
-            java-version: "17"
+            java-version: "21"
             gradle-version: "8.14.3"
           - module: fabric-1.20.1
-            java-version: "17"
+            java-version: "21"
             gradle-version: "8.14.3"
           - module: forge-1.21.4
             java-version: "21"
-            gradle-version: "9.3.1"
+            gradle-version: "8.14.3"
           - module: forge-1.21.5
             java-version: "21"
-            gradle-version: "9.3.1"
+            gradle-version: "8.14.3"
           - module: fabric-1.21.4
             java-version: "21"
-            gradle-version: "9.3.1"
+            gradle-version: "8.14.3"
           - module: fabric-1.21.5
             java-version: "21"
-            gradle-version: "9.3.1"
+            gradle-version: "8.14.3"
           - module: fabric-1.21.6
             java-version: "21"
-            gradle-version: "9.3.1"
+            gradle-version: "8.14.3"
           - module: fabric-1.21.8
             java-version: "21"
-            gradle-version: "9.3.1"
+            gradle-version: "8.14.3"
           - module: fabric-1.21.3
             java-version: "21"
-            gradle-version: "9.3.1"
+            gradle-version: "8.14.3"
 
     steps:
       - name: Checkout

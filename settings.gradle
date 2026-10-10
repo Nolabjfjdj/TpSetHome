@@ -11,17 +11,32 @@ pluginManagement {
 
 rootProject.name = 'TpSetHome'
 include 'common'
-include 'forge-1.20.1'
-include 'fabric-1.20.1'
-include 'forge-1.21.4'
-include 'fabric-1.21.4'
-include 'fabric-1.21.3'
-include 'forge-1.21.5'
-include 'fabric-1.21.5'
-include 'fabric-1.21.6'
-include 'fabric-1.21.8'
 
-include 'fabric-1.21.7'
-include 'fabric-1.21.9'
-include 'fabric-1.21.10'
-include 'fabric-1.21.11'
+def allModules = [
+    'forge-1.20.1',
+    'fabric-1.20.1',
+    'forge-1.21.4',
+    'forge-1.21.5',
+    'fabric-1.21.3',
+    'fabric-1.21.4',
+    'fabric-1.21.5',
+    'fabric-1.21.6',
+    'fabric-1.21.7',
+    'fabric-1.21.8',
+    'fabric-1.21.9',
+    'fabric-1.21.10',
+    'fabric-1.21.11',
+    'fabric-26.1',
+    'fabric-26.2',
+    'fabric-26.3'
+]
+
+def targetModule = providers.gradleProperty('targetModule').orNull
+if (targetModule != null && !targetModule.isBlank()) {
+    if (!allModules.contains(targetModule)) {
+        throw new GradleException("Unknown targetModule: ${targetModule}")
+    }
+    include targetModule
+} else {
+    allModules.each { include it }
+}

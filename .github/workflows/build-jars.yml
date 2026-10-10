@@ -42,11 +42,11 @@ jobs:
       matrix:
         include:
           - module: forge-1.20.1
-            java-version: "21"
-            gradle-version: "8.14.3"
+            java-version: "17"
+            gradle-version: "8.8"
           - module: fabric-1.20.1
-            java-version: "21"
-            gradle-version: "8.14.3"
+            java-version: "17"
+            gradle-version: "8.8"
           - module: forge-1.21.4
             java-version: "21"
             gradle-version: "8.14.3"
@@ -85,6 +85,18 @@ jobs:
             java-version: "21"
             gradle-version: "8.14.3"
 
+          - module: fabric-26.1
+            java-version: "25"
+            gradle-version: "9.6.0"
+
+          - module: fabric-26.2
+            java-version: "25"
+            gradle-version: "9.6.0"
+
+          - module: fabric-26.3
+            java-version: "25"
+            gradle-version: "9.6.0"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -101,7 +113,7 @@ jobs:
           gradle-version: ${{ matrix.gradle-version }}
 
       - name: Build mod JAR
-        run: gradle --no-daemon :${{ matrix.module }}:build
+        run: gradle --no-daemon -PtargetModule=${{ matrix.module }} :${{ matrix.module }}:build
 
       - name: Upload JAR for testing
         uses: actions/upload-artifact@v4

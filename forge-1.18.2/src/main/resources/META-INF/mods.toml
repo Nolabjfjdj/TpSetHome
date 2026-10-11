@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="CC0-1.0"
+
+[[mods]]
+modId="sethomemod"
+version="1.0.0"
+displayName="TpSetHome"
+authors="NolanLaBanane415"
+description='''Un mod utilitaire simple pour gérer des points de téléportation (homes).'''
+
+[[dependencies.sethomemod]]
+modId="forge"
+mandatory=true
+versionRange="[40,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.sethomemod]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18.2,1.19)"
+ordering="NONE"
+side="BOTH"

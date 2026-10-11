@@ -3,6 +3,7 @@ package com.example.sethomemod;
 import com.example.sethomemod.common.HomeCommands;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -47,5 +48,13 @@ public final class HomeCommand extends CommandBase {
         } else if ("delhome".equals(commandName)) {
             homeCommands.delhome(player, args[0]);
         }
+    }
+
+    @Override
+    public int compareTo(Object other) {
+        if (other instanceof ICommand) {
+            return commandName.compareTo(((ICommand) other).getCommandName());
+        }
+        return 0;
     }
 }

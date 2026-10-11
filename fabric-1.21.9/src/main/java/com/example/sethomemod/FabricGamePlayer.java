@@ -45,7 +45,7 @@ public class FabricGamePlayer implements GamePlayer {
 
     @Override
     public void teleport(double x, double y, double z, String dimensionId) {
-        ServerLevel targetLevel = player.serverLevel().getServer().getLevel(
+        ServerLevel targetLevel = player.level().getServer().getLevel(
             ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(dimensionId))
         );
         if (targetLevel != null) {

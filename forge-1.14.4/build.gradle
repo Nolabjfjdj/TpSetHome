@@ -44,15 +44,19 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir '../common/src/main/java'
+        }
+    }
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.2.26'
-    implementation project(':common')
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-}
-
-tasks.named('jar', Jar) {
-    from project(':common').sourceSets.main.output
 }

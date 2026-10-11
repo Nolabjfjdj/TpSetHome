@@ -41,6 +41,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - module: forge-1.5.2
+            java-version: "17"
+            gradle-version: "9.3.0"
           - module: forge-1.6.4
             java-version: "17"
             gradle-version: "9.3.0"

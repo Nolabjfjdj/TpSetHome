@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '7.0.26'
+    id 'net.minecraftforge.renamer' version '1.1.2'
+}
+
+version = '1.0.0'
+group = 'com.example.sethomemod'
+base {
+    archivesName = 'TpSetHome-forge-1.5.2'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+}
+
+minecraft {
+    mappings channel: 'snapshot', version: '20130601-1.5.2'
+    runs {
+        register('client') {
+            workingDir = file('run/client')
+            environment.put('tweakClass', 'cpw.mods.fml.common.launcher.FMLTweaker')
+            jvmArgs '-Dfml.ignoreInvalidMinecraftCertificates=true'
+        }
+        register('server') {
+            workingDir = file('run/server')
+            environment.put('tweakClass', 'cpw.mods.fml.common.launcher.FMLTweaker')
+            jvmArgs '-Dfml.ignoreInvalidMinecraftCertificates=true'
+        }
+    }
+    useDefaultAccessTransformer()
+}
+
+dependencies {
+    implementation minecraft.dependency('net.minecraftforge:forge:1.5.2-7.8.1.738')
+    implementation project(':common')
+}
+
+renamer.mappings.from minecraft.dependency.toSrgFile
+
+renamer.classes(tasks.named('jar', Jar)) {
+    map.from minecraft.dependency.toSrgFile
+    legacyAccessTransformers = true
+    archiveClassifier = 'srg'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

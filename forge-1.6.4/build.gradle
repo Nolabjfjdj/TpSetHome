@@ -11,8 +11,8 @@ base {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
 }
 
 repositories {
@@ -42,6 +42,10 @@ minecraft {
 dependencies {
     implementation minecraft.dependency('net.minecraftforge:forge:1.6.4-9.11.1.964')
     implementation project(':common')
+}
+
+tasks.named('jar', Jar) {
+    from project(':common').sourceSets.main.output
 }
 
 renamer.mappings.from minecraft.dependency.toSrgFile

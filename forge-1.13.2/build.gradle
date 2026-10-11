@@ -22,7 +22,7 @@ archivesBaseName = 'TpSetHome-forge-1.13.2'
 sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190624-1.13.2'
+    mappings channel: 'snapshot', version: '20180921-1.13'
     runs {
         configureEach {
             workingDirectory project.file('run')

@@ -1,7 +1,7 @@
 package com.example.sethomemod;
 
 import com.example.sethomemod.common.GamePlayer;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -40,12 +40,12 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public String getDimensionId() {
-        return player.level().dimension().location().toString();
+        return player.getLevel().dimension().location().toString();
     }
 
     @Override
     public void teleport(double x, double y, double z, String dimensionId) {
-        ResourceKey<Level> key = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(dimensionId));
+        ResourceKey<Level> key = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dimensionId));
         ServerLevel targetLevel = player.getServer().getLevel(key);
         if (targetLevel != null) {
             player.teleportTo(targetLevel, x, y, z, player.getYRot(), player.getXRot());

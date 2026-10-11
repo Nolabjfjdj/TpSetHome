@@ -3,7 +3,7 @@ package com.example.sethomemod;
 import com.example.sethomemod.common.GamePlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public final class ForgeGamePlayer implements GamePlayer {
@@ -15,7 +15,7 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public UUID getUuid() {
-        return player.getUniqueID();
+        return UUID.nameUUIDFromBytes(("OfflinePlayer:" + player.username).getBytes(StandardCharsets.UTF_8));
     }
 
     @Override

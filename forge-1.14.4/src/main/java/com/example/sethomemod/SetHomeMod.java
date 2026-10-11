@@ -9,9 +9,9 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 @Mod("sethomemod")
@@ -25,8 +25,8 @@ public final class SetHomeMod {
     }
 
     @SubscribeEvent
-    public void onRegisterCommands(RegisterCommandsEvent event) {
-        CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
+    public void onServerStarting(FMLServerStartingEvent event) {
+        CommandDispatcher<CommandSource> dispatcher = event.getCommandDispatcher();
 
         dispatcher.register(Commands.literal("sethome")
             .then(Commands.argument("homeName", StringArgumentType.word())

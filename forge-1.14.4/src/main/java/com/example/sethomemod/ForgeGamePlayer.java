@@ -21,17 +21,17 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public double getX() {
-        return player.getPosX();
+        return player.posX;
     }
 
     @Override
     public double getY() {
-        return player.getPosY();
+        return player.posY;
     }
 
     @Override
     public double getZ() {
-        return player.getPosZ();
+        return player.posZ;
     }
 
     @Override

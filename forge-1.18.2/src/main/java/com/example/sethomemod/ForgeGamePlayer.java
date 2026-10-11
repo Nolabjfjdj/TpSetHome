@@ -2,7 +2,7 @@ package com.example.sethomemod;
 
 import com.example.sethomemod.common.GamePlayer;
 import net.minecraft.core.Registry;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -56,6 +56,6 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public void sendMessage(String message) {
-        player.sendSystemMessage(Component.literal(message));
+        player.sendSystemMessage(new TextComponent(message));
     }
 }

@@ -26,11 +26,6 @@ public final class HomeCommand extends CommandBase {
     }
 
     @Override
-    public int getRequiredPermissionLevel() {
-        return 0;
-    }
-
-    @Override
     public void processCommand(ICommandSender sender, String[] args) {
         if (!(sender instanceof EntityPlayerMP)) {
             sender.sendChatToPlayer("Cette commande doit être utilisée par un joueur.");

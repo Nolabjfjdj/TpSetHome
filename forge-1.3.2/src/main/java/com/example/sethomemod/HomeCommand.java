@@ -1,11 +1,10 @@
 package com.example.sethomemod;
 
 import com.example.sethomemod.common.HomeCommands;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.src.CommandBase;
+import net.minecraft.src.ICommand;
+import net.minecraft.src.ICommandSender;
+import net.minecraft.src.EntityPlayerMP;
 
 public final class HomeCommand extends CommandBase {
     private final String commandName;
@@ -32,12 +31,14 @@ public final class HomeCommand extends CommandBase {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(ICommandSender sender, String[] args) {
         if (!(sender instanceof EntityPlayerMP)) {
-            throw new CommandException("Cette commande doit être utilisée par un joueur.");
+            sender.sendChatToPlayer("Cette commande doit être utilisée par un joueur.");
+            return;
         }
         if (args.length != 1) {
-            throw new CommandException(getCommandUsage(sender));
+            sender.sendChatToPlayer(getCommandUsage(sender));
+            return;
         }
 
         ForgeGamePlayer player = new ForgeGamePlayer((EntityPlayerMP) sender);

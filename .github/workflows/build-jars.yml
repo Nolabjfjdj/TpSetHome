@@ -42,8 +42,8 @@ jobs:
       matrix:
         include:
           - module: forge-1.16.5
-            java-version: "8"
-            gradle-version: "6.9.1"
+            java-version: "17"
+            gradle-version: "7.5.1"
           - module: forge-1.18.2
             java-version: "17"
             gradle-version: "7.5.1"

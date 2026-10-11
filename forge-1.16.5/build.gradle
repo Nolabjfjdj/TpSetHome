@@ -1,19 +1,9 @@
-buildscript {
-    repositories {
-        maven {
-            url = 'https://maven.minecraftforge.net/'
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
-    }
+plugins {
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[5.1,5.2)'
 }
-
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
 
 version = '1.0.0'
 group = 'com.example.sethomemod'

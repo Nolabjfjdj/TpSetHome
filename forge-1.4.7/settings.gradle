@@ -1,0 +1,4 @@
+rootProject.name = 'forge-1.4.7-build'
+include 'common'
+project(':common').projectDir = file('../common')
+project(':common').buildFileName = 'build-legacy.gradle'

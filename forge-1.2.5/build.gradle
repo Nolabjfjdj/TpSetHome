@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraftVersion}"
-    forge "net.minecraftforge:forge:${forgeVersion}:universal@zip"
+    forge "net.minecraftforge:forge:${forgeVersion}:server@zip"
     mappings "net.minecraftforge:forge:${forgeVersion}:src@zip"
     implementation project(':common')
 }

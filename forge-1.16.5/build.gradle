@@ -1,15 +1,25 @@
-plugins {
-    id 'java'
-    id 'idea'
-    id 'eclipse'
-    id 'net.minecraftforge.gradle' version '[4.1.16,4.2)'
+buildscript {
+    repositories {
+        maven {
+            url = 'https://maven.minecraftforge.net/'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+    }
 }
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 version = '1.0.0'
 group = 'com.example.sethomemod'
 archivesBaseName = 'TpSetHome-forge-1.16.5'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
     mappings channel: 'snapshot', version: '20210309-1.16.5'

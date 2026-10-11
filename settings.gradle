@@ -17,6 +17,7 @@ rootProject.name = 'TpSetHome'
 include 'common'
 
 def allModules = [
+    'forge-1.10.2',
     'forge-1.11.2',
     'forge-1.12.2',
     'forge-1.13.2',

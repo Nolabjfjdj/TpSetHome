@@ -18,6 +18,7 @@ apply plugin: 'java'
 
 version = '1.0.0'
 group = 'com.example.sethomemod'
+description = 'Minecraft 1.2.5 legacy metadata compatibility test'
 
 dependencies {
     minecraft 'com.mojang:minecraft:1.2.5'

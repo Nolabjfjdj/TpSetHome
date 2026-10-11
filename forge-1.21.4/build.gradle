@@ -30,6 +30,7 @@ minecraft {
 }
 
 repositories {
+    minecraft.mavenizer(it)
     maven fg.forgeMaven
     maven fg.minecraftLibsMaven
     mavenCentral()

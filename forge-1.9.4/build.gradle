@@ -22,7 +22,7 @@ archivesBaseName = 'TpSetHome-forge-1.9.4'
 sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
-    version = '1.9.4-12.17.0.2317'
+    version = '1.9.4-12.17.0.2317-1.9.4'
     runDir = 'run'
     mappings = 'snapshot_20160518'
 }

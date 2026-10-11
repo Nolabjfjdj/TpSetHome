@@ -5,9 +5,9 @@ import com.example.sethomemod.common.HomeManager;
 import com.example.sethomemod.common.HomeStorage;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,12 +26,12 @@ public final class SetHomeMod {
 
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
 
         dispatcher.register(Commands.literal("sethome")
             .then(Commands.argument("homeName", StringArgumentType.word())
                 .executes(context -> {
-                    ServerPlayer player = context.getSource().getPlayerOrException();
+                    ServerPlayerEntity player = context.getSource().asPlayer();
                     homeCommands.sethome(new ForgeGamePlayer(player), StringArgumentType.getString(context, "homeName"));
                     return 1;
                 })));
@@ -39,7 +39,7 @@ public final class SetHomeMod {
         dispatcher.register(Commands.literal("home")
             .then(Commands.argument("homeName", StringArgumentType.word())
                 .executes(context -> {
-                    ServerPlayer player = context.getSource().getPlayerOrException();
+                    ServerPlayerEntity player = context.getSource().asPlayer();
                     homeCommands.home(new ForgeGamePlayer(player), StringArgumentType.getString(context, "homeName"));
                     return 1;
                 })));
@@ -47,7 +47,7 @@ public final class SetHomeMod {
         dispatcher.register(Commands.literal("delhome")
             .then(Commands.argument("homeName", StringArgumentType.word())
                 .executes(context -> {
-                    ServerPlayer player = context.getSource().getPlayerOrException();
+                    ServerPlayerEntity player = context.getSource().asPlayer();
                     homeCommands.delhome(new ForgeGamePlayer(player), StringArgumentType.getString(context, "homeName"));
                     return 1;
                 })));

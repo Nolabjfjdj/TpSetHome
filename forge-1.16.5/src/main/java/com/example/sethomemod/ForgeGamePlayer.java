@@ -1,54 +1,54 @@
 package com.example.sethomemod;
 
 import com.example.sethomemod.common.GamePlayer;
-import net.minecraft.core.Registry;
-import net.minecraft.network.chat.StringTextComponent;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.UUID;
 
 public final class ForgeGamePlayer implements GamePlayer {
-    private final ServerPlayer player;
+    private final ServerPlayerEntity player;
 
-    public ForgeGamePlayer(ServerPlayer player) {
+    public ForgeGamePlayer(ServerPlayerEntity player) {
         this.player = player;
     }
 
     @Override
     public UUID getUuid() {
-        return player.getUUID();
+        return player.getUniqueID();
     }
 
     @Override
     public double getX() {
-        return player.getX();
+        return player.getPosX();
     }
 
     @Override
     public double getY() {
-        return player.getY();
+        return player.getPosY();
     }
 
     @Override
     public double getZ() {
-        return player.getZ();
+        return player.getPosZ();
     }
 
     @Override
     public String getDimensionId() {
-        return player.getLevel().dimension().location().toString();
+        return player.getEntityWorld().getDimensionKey().getLocation().toString();
     }
 
     @Override
     public void teleport(double x, double y, double z, String dimensionId) {
-        ResourceKey<Level> key = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dimensionId));
-        ServerLevel targetLevel = player.getServer().getLevel(key);
+        RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(dimensionId));
+        ServerWorld targetLevel = player.getServer().getWorld(key);
         if (targetLevel != null) {
-            player.teleportTo(targetLevel, x, y, z, player.getYRot(), player.getXRot());
+            player.teleport(targetLevel, x, y, z, player.rotationYaw, player.rotationPitch);
         } else {
             sendMessage("Impossible de trouver la dimension du home.");
         }
@@ -56,6 +56,6 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public void sendMessage(String message) {
-        player.sendMessage(new StringTextComponent(message), player.getUUID());
+        player.sendMessage(new StringTextComponent(message), player.getUniqueID());
     }
 }

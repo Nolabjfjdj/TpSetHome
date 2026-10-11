@@ -37,6 +37,7 @@ jobs:
   build:
     name: Build ${{ matrix.module }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:

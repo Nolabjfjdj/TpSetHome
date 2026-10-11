@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 public class HomeManager {
     private final HomeStorage storage;
@@ -13,8 +14,13 @@ public class HomeManager {
         this.storage = storage;
     }
 
-    private Map<String, HomeData> homesOf(UUID playerId) {
-        return cache.computeIfAbsent(playerId, storage::load);
+    private Map<String, HomeData> homesOf(final UUID playerId) {
+        return cache.computeIfAbsent(playerId, new Function<UUID, Map<String, HomeData>>() {
+            @Override
+            public Map<String, HomeData> apply(UUID id) {
+                return storage.load(id);
+            }
+        });
     }
 
     public void setHome(UUID playerId, String name, double x, double y, double z, String dimensionId) {

@@ -31,6 +31,16 @@ jobs:
       - name: Confirm normalized legacy metadata
         run: cat experiments/forge-1.2.5-sin2/minecraft-1.2.5.json
 
+      - name: Clear cached Minecraft 1.2.5 metadata
+        run: |
+          CACHE="$HOME/.gradle/caches/fabric-loom"
+          if [ -f "$CACHE/minecraft-1.2.5-info.json" ]; then
+            echo "Cached manifest before cleanup:"
+            head -c 300 "$CACHE/minecraft-1.2.5-info.json" || true
+            echo
+          fi
+          rm -f "$CACHE/minecraft-1.2.5-info.json" "$CACHE/minecraft-1.2.5-info.json.etag"
+
       - name: Merge and remap Minecraft 1.2.5
         working-directory: experiments/forge-1.2.5-sin2
-        run: gradle --no-daemon build --stacktrace
+        run: gradle --no-daemon build --stacktrace --info

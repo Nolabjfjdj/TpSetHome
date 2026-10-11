@@ -4,7 +4,6 @@ import com.example.sethomemod.common.HomeCommands;
 import com.example.sethomemod.common.HomeManager;
 import com.example.sethomemod.common.HomeStorage;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 import java.nio.file.Paths;
@@ -18,7 +17,7 @@ public final class SetHomeMod {
         homeCommands = new HomeCommands(new HomeManager(storage));
     }
 
-    @EventHandler
+    @Mod.ServerStarting
     public void onServerStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new HomeCommand("sethome", homeCommands));
         event.registerServerCommand(new HomeCommand("home", homeCommands));

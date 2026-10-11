@@ -45,3 +45,7 @@ dependencies {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+
+tasks.named('jar', Jar) {
+    from project(':common').sourceSets.main.output
+}

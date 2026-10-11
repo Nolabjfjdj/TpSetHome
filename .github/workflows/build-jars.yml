@@ -49,10 +49,10 @@ jobs:
             gradle-version: "8.8"
           - module: forge-1.21.4
             java-version: "21"
-            gradle-version: "8.14.3"
+            gradle-version: "9.3.1"
           - module: forge-1.21.5
             java-version: "21"
-            gradle-version: "8.14.3"
+            gradle-version: "9.3.1"
           - module: fabric-1.21.4
             java-version: "21"
             gradle-version: "8.14.3"

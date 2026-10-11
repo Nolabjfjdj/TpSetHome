@@ -1,0 +1,14 @@
+[
+  {
+    "modid": "sethomemod",
+    "name": "TpSetHome",
+    "description": "Commandes de homes pour Minecraft Forge.",
+    "version": "1.0.0",
+    "mcversion": "1.12.2",
+    "authorList": ["Nolabjfjdj"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

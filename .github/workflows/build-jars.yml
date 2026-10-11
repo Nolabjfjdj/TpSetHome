@@ -41,6 +41,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - module: forge-1.4.7
+            java-version: "11"
+            gradle-version: "7.6.4"
           - module: forge-1.5.2
             java-version: "11"
             gradle-version: "7.6.4"
@@ -146,8 +149,8 @@ jobs:
 
       - name: Build mod JAR
         run: |
-          if [ "${{ matrix.module }}" = "forge-1.5.2" ]; then
-            cd forge-1.5.2
+          if [ "${{ matrix.module }}" = "forge-1.4.7" ] || [ "${{ matrix.module }}" = "forge-1.5.2" ]; then
+            cd "${{ matrix.module }}"
             gradle --no-daemon build
           else
             gradle --no-daemon -PtargetModule=${{ matrix.module }} :${{ matrix.module }}:build

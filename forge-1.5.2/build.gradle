@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':common')
+    compile project(':common')
 }
 
 tasks.withType(JavaCompile) {

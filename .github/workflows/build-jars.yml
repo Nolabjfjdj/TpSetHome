@@ -145,7 +145,13 @@ jobs:
           gradle-version: ${{ matrix.gradle-version }}
 
       - name: Build mod JAR
-        run: gradle --no-daemon -PtargetModule=${{ matrix.module }} :${{ matrix.module }}:build
+        run: |
+          if [ "${{ matrix.module }}" = "forge-1.5.2" ]; then
+            cd forge-1.5.2
+            gradle --no-daemon build
+          else
+            gradle --no-daemon -PtargetModule=${{ matrix.module }} :${{ matrix.module }}:build
+          fi
 
       - name: Upload JAR for testing
         uses: actions/upload-artifact@v4

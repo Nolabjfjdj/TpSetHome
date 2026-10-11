@@ -1,7 +1,7 @@
 package com.example.sethomemod;
 
 import com.example.sethomemod.common.GamePlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.src.EntityPlayerMP;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;

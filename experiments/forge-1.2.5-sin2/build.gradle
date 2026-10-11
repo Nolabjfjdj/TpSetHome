@@ -24,7 +24,7 @@ dependencies {
 }
 
 minecraft {
-    jarMergeOrder = 'last'
+    customManifest = 'https://raw.githubusercontent.com/Nolabjfjdj/TpSetHome/experiment/forge-1.2.5-sin2/experiments/forge-1.2.5-sin2/minecraft-1.2.5.json'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

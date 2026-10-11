@@ -41,7 +41,7 @@ public final class ForgeGamePlayer implements GamePlayer {
     @Override
     public void teleport(double x, double y, double z, String dimensionId) {
         if (getDimensionId().equals(dimensionId)) {
-            player.playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
+            player.connection.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
         } else {
             sendMessage("Ce home se trouve dans une autre dimension, la téléportation n'est pas prise en charge sur cette version.");
         }
@@ -49,6 +49,6 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public void sendMessage(String message) {
-        player.addChatMessage(new TextComponentString(message));
+        player.sendMessage(new TextComponentString(message));
     }
 }

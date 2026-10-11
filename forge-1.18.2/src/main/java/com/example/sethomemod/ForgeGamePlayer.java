@@ -56,6 +56,6 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public void sendMessage(String message) {
-        player.sendSystemMessage(new TextComponent(message));
+        player.sendMessage(new TextComponent(message), player.getUUID());
     }
 }

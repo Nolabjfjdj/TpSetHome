@@ -17,12 +17,12 @@ public final class HomeCommand extends CommandBase {
     }
 
     @Override
-    public String getName() {
+    public String getCommandName() {
         return commandName;
     }
 
     @Override
-    public String getUsage(ICommandSender sender) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + commandName + " <nom>";
     }
 
@@ -37,7 +37,7 @@ public final class HomeCommand extends CommandBase {
             throw new CommandException("Cette commande doit être utilisée par un joueur.");
         }
         if (args.length != 1) {
-            throw new CommandException(getUsage(sender));
+            throw new CommandException(getCommandUsage(sender));
         }
 
         ForgeGamePlayer player = new ForgeGamePlayer((EntityPlayerMP) sender);

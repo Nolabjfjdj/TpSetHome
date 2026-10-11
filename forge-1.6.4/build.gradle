@@ -22,7 +22,6 @@ sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
     version = '1.6.4-9.11.1.964'
-    runDir = 'run'
 }
 
 repositories {

@@ -38,7 +38,7 @@ def allModules = [
     'fabric-26.3'
 ]
 
-def targetModule = providers.gradleProperty('targetModule').orNull
+def targetModule = gradle.startParameter.projectProperties.get('targetModule')
 if (targetModule != null && !targetModule.isBlank()) {
     if (!allModules.contains(targetModule)) {
         throw new GradleException("Unknown targetModule: ${targetModule}")

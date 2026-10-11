@@ -3,7 +3,7 @@ package com.example.sethomemod;
 import com.example.sethomemod.common.GamePlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.UUID;
 
@@ -51,6 +51,6 @@ public final class ForgeGamePlayer implements GamePlayer {
 
     @Override
     public void sendMessage(String message) {
-        player.sendMessage(new StringTextComponent(message));
+        player.sendMessage(new TextComponentString(message));
     }
 }

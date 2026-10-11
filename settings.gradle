@@ -43,7 +43,7 @@ def allModules = [
 ]
 
 def targetModule = gradle.startParameter.projectProperties.get('targetModule')
-if (targetModule != null && !targetModule.isBlank()) {
+if (targetModule != null && !targetModule.trim().isEmpty()) {
     if (!allModules.contains(targetModule)) {
         throw new GradleException("Unknown targetModule: ${targetModule}")
     }

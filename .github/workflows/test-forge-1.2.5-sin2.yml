@@ -1,0 +1,36 @@
+name: Experimental Minecraft 1.2.5 Sin² merge test
+
+on:
+  push:
+    branches:
+      - experiment/forge-1.2.5-sin2
+
+permissions:
+  contents: read
+
+jobs:
+  merge-test:
+    name: Test Minecraft 1.2.5 merge
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "8"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "4.10.3"
+
+      - name: Confirm normalized legacy metadata
+        run: cat experiments/forge-1.2.5-sin2/minecraft-1.2.5.json
+
+      - name: Merge and remap Minecraft 1.2.5
+        working-directory: experiments/forge-1.2.5-sin2
+        run: gradle --no-daemon build --stacktrace

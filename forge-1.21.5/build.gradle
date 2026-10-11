@@ -61,3 +61,7 @@ plugins {
                                                                                                                                                                                         // This is done by default in Java 18+, but this ensures it no matter the Java or Gradle version
                                                                                                                                                                                             options.encoding = 'UTF-8'
                                                                                                                                                                                             }
+
+tasks.named('jar', Jar) {
+    from project(':common').sourceSets.main.output
+}

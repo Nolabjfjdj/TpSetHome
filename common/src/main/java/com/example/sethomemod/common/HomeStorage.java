@@ -39,7 +39,10 @@ public class HomeStorage {
         try (Reader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
             java.lang.reflect.Type type = new TypeToken<Map<String, HomeData>>() {}.getType();
             Map<String, HomeData> result = gson.fromJson(reader, type);
-            return result != null ? result : new HashMap<>();
+            if (result == null) {
+                return new HashMap<String, HomeData>();
+            }
+            return result;
         } catch (IOException e) {
             throw new RuntimeException("Impossible de lire les homes du joueur " + playerId, e);
         }

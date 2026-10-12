@@ -7,6 +7,10 @@ public class HomeCommands {
         this.homeManager = homeManager;
     }
 
+    private String message(String english, String french) {
+        return "fr".equals(homeManager.getLanguage()) ? french : english;
+    }
+
     public void sethome(GamePlayer player, String homeName) {
         homeManager.setHome(
             player.getUuid(),
@@ -14,25 +18,40 @@ public class HomeCommands {
             player.getX(), player.getY(), player.getZ(),
             player.getDimensionId()
         );
-        player.sendMessage("Home '" + homeName + "' défini avec succès !");
+        player.sendMessage(message(
+            "Home '" + homeName + "' set successfully!",
+            "Home '" + homeName + "' défini avec succès !"
+        ));
     }
 
     public void home(GamePlayer player, String homeName) {
         HomeData home = homeManager.getHome(player.getUuid(), homeName);
         if (home == null) {
-            player.sendMessage("Le home '" + homeName + "' n'existe pas.");
+            player.sendMessage(message(
+                "Home '" + homeName + "' does not exist.",
+                "Le home '" + homeName + "' n'existe pas."
+            ));
             return;
         }
         player.teleport(home.x, home.y, home.z, home.dimensionId);
-        player.sendMessage("Téléporté à '" + homeName + "' !");
+        player.sendMessage(message(
+            "Teleported to '" + homeName + "'!",
+            "Téléporté à '" + homeName + "' !"
+        ));
     }
 
     public void delhome(GamePlayer player, String homeName) {
         boolean removed = homeManager.delHome(player.getUuid(), homeName);
         if (removed) {
-            player.sendMessage("Home '" + homeName + "' supprimé.");
+            player.sendMessage(message(
+                "Home '" + homeName + "' deleted.",
+                "Home '" + homeName + "' supprimé."
+            ));
         } else {
-            player.sendMessage("Le home '" + homeName + "' n'existe pas.");
+            player.sendMessage(message(
+                "Home '" + homeName + "' does not exist.",
+                "Le home '" + homeName + "' n'existe pas."
+            ));
         }
     }
 }

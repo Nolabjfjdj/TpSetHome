@@ -16,7 +16,7 @@ buildscript {
 apply plugin: 'agency.highlysuspect.voldeloom'
 apply plugin: 'java'
 
-version = '1.0.0'
+version = '1.0.1'
 group = 'com.example.sethomemod'
 archivesBaseName = 'TpSetHome-forge-1.3.2'
 

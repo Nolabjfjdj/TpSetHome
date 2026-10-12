@@ -14,6 +14,10 @@ public class HomeManager {
         this.storage = storage;
     }
 
+    public String getLanguage() {
+        return storage.getLanguage();
+    }
+
     private Map<String, HomeData> homesOf(final UUID playerId) {
         return cache.computeIfAbsent(playerId, new Function<UUID, Map<String, HomeData>>() {
             @Override

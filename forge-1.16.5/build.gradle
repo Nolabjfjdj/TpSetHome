@@ -5,7 +5,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[5.1,5.2)'
 }
 
-version = '1.0.0'
+version = '1.0.1'
 group = 'com.example.sethomemod'
 archivesBaseName = 'TpSetHome-forge-1.16.5'
 

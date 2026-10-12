@@ -8,7 +8,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 import java.nio.file.Paths;
 
-@Mod(modid = "sethomemod", name = "TpSetHome", version = "1.0.0")
+@Mod(modid = "sethomemod", name = "TpSetHome", version = "1.0.1")
 public final class SetHomeMod {
     private final HomeCommands homeCommands;
 

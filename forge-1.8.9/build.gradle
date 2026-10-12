@@ -15,7 +15,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
-version = '1.0.0'
+version = '1.0.1'
 group = 'com.example.sethomemod'
 archivesBaseName = 'TpSetHome-forge-1.8.9'
 

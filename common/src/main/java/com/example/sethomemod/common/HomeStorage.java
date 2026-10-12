@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,7 +24,21 @@ public class HomeStorage {
         try {
             Files.createDirectories(baseDir);
         } catch (IOException e) {
-            throw new RuntimeException("Impossible de créer le dossier de stockage TpSetHome", e);
+            throw new RuntimeException("Could not create the TpSetHome storage directory", e);
+        }
+    }
+
+    public String getLanguage() {
+        Path languageFile = baseDir.resolve("language.txt");
+        if (!Files.exists(languageFile)) {
+            return "en";
+        }
+        try {
+            String language = new String(Files.readAllBytes(languageFile), StandardCharsets.UTF_8)
+                .trim().toLowerCase(Locale.ROOT);
+            return "fr".equals(language) ? "fr" : "en";
+        } catch (IOException e) {
+            return "en";
         }
     }
 
@@ -44,7 +59,7 @@ public class HomeStorage {
             }
             return result;
         } catch (IOException e) {
-            throw new RuntimeException("Impossible de lire les homes du joueur " + playerId, e);
+            throw new RuntimeException("Could not read homes for player " + playerId, e);
         }
     }
 
@@ -53,7 +68,7 @@ public class HomeStorage {
         try (Writer writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
             gson.toJson(homes, writer);
         } catch (IOException e) {
-            throw new RuntimeException("Impossible de sauvegarder les homes du joueur " + playerId, e);
+            throw new RuntimeException("Could not save homes for player " + playerId, e);
         }
     }
 }

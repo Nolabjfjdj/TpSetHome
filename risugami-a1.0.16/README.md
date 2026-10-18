@@ -49,3 +49,6 @@ The current bytecode inspection found that the canvas class receives AWT key eve
 
 
 The latest inspection is checking the AWT canvas's `keyPressed` path and the active-screen class before selecting the bytecode injection point. The currently generated ZIP remains a diagnostic prototype only, not a usable mod.
+
+
+The inspection report is uploaded before the patch step so the exact keyboard-dispatch signatures remain available even if the build correctly rejects an unverified injection point. No Alpha patch ZIP should be used until the input hook is verified.

@@ -43,3 +43,6 @@ The first successful inspection confirms the chat input class is obfuscated as `
 The first compiled patch was rejected during review because `ab` is the AWT canvas, not the chat screen, so that archive must not be treated as a working release. The inspection workflow now searches the exact Alpha client's keyboard-event dispatch and current-screen classes to find the real chat input hook before rebuilding.
 
 The eventual patch will contain only changed classes and TpSetHome's handler, not Mojang's client JAR. It must still be tested in a disposable Alpha a1.0.16 instance. The Modrinth "Risugami's ModLoader" label is not treated as proof that this is a conventional ModLoader API mod; this route is a direct JAR patch.
+
+
+The current bytecode inspection found that the canvas class receives AWT key events, while the font renderer is a separate class. The next build is mapping the keyboard dispatch to the active screen's text-entry method. Do not install the first patch artifact; it was compiled successfully but did not target the actual chat input.

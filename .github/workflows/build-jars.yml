@@ -181,7 +181,10 @@ jobs:
 
       - name: Build mod JAR
         run: |
-          if [ "${{ matrix.module }}" = "forge-1.2.5" ] || [ "${{ matrix.module }}" = "forge-1.3.2" ] || [ "${{ matrix.module }}" = "forge-1.4.7" ] || [ "${{ matrix.module }}" = "forge-1.5.2" ] || [ "${{ matrix.module }}" = "forge-1.6.4" ]; then
+          if [ "${{ matrix.module }}" = "forge-1.6.4" ]; then
+            cd forge-1.6.4
+            gradle --no-daemon build -x downloadClient -x downloadServer
+          elif [ "${{ matrix.module }}" = "forge-1.2.5" ] || [ "${{ matrix.module }}" = "forge-1.3.2" ] || [ "${{ matrix.module }}" = "forge-1.4.7" ] || [ "${{ matrix.module }}" = "forge-1.5.2" ]; then
             cd "${{ matrix.module }}"
             gradle --no-daemon build
           else

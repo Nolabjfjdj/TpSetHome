@@ -129,6 +129,9 @@ jobs:
           - module: fabric-1.21.10
             java-version: "21"
             gradle-version: "8.14.3"
+          - module: fabric-1.21.11
+            java-version: "21"
+            gradle-version: "8.14.3"
           - module: fabric-26.1
             java-version: "25"
             gradle-version: "9.6.0"

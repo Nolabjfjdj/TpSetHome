@@ -56,13 +56,8 @@ jobs:
             echo "SOURCE=$file" >> build/alpha/report.txt
             grep -n -E '^[[:space:]]*(public|private|protected).*\\(.*KeyEvent|^[[:space:]]*public class |^[[:space:]]*public abstract class ' "$file" >> build/alpha/report.txt || true
           done
-          printf '\nClass and method declarations using char/int parameters:\n' >> build/alpha/report.txt
-          for file in build/alpha/source/*.java; do
-            if grep -q -E '^[[:space:]]*(public|private|protected).*\\([^)]*char[^)]*int|^[[:space:]]*(public|private|protected).*\\([^)]*int[^)]*char' "$file"; then
-              echo "SOURCE=$file" >> build/alpha/report.txt
-              grep -n -E '^[[:space:]]*(public|private|protected).*\\([^)]*char[^)]*int|^[[:space:]]*(public|private|protected).*\\([^)]*int[^)]*char|^[[:space:]]*public class |^[[:space:]]*public abstract class ' "$file" >> build/alpha/report.txt || true
-            fi
-          done
+          printf '\nDeclarations mentioning keyboard input:\n' >> build/alpha/report.txt
+          grep -R -n -E 'KeyEvent|keyTyped|keyPressed|keyReleased|keyCode|keyChar' build/alpha/source --include='*.java' | head -n 250 >> build/alpha/report.txt || true
           printf '\nCurrent screen class signatures (er):\n' >> build/alpha/report.txt
           javap -classpath build/alpha/a1.0.16-client.jar -private er >> build/alpha/report.txt 2>&1 || true
           printf '\nFont renderer signatures (jt):\n' >> build/alpha/report.txt
@@ -80,6 +75,13 @@ jobs:
           done
           printf '\nMinecraft class declaration:\n' >> build/alpha/report.txt
           javap -classpath build/alpha/a1.0.16-client.jar -private net.minecraft.client.Minecraft >> build/alpha/report.txt 2>&1 || true
+      - name: Upload bytecode inspection report
+        uses: actions/upload-artifact@v4
+        with:
+          name: alpha-a1.0.16-bytecode-report
+          path: build/alpha/report.txt
+          if-no-files-found: error
+          retention-days: 14
       - name: Compile and create the Alpha patch ZIP
         shell: bash
         run: |
@@ -89,13 +91,6 @@ jobs:
           javac -source 1.7 -target 1.7 -cp build/alpha/asm-5.2.jar -d build/alpha/classes risugami-a1.0.16/src/main/java/TpSetHomeAlpha.java risugami-a1.0.16/src/main/java/PatchAlpha.java
           java -cp build/alpha/classes:build/alpha/asm-5.2.jar PatchAlpha build/alpha/a1.0.16-client.jar build/alpha/classes/TpSetHomeAlpha.class build/alpha/TpSetHome-alpha-a1.0.16.zip
           unzip -l build/alpha/TpSetHome-alpha-a1.0.16.zip
-      - name: Upload bytecode inspection report
-        uses: actions/upload-artifact@v4
-        with:
-          name: alpha-a1.0.16-bytecode-report
-          path: build/alpha/report.txt
-          if-no-files-found: error
-          retention-days: 14
       - name: Upload TpSetHome Alpha patch
         uses: actions/upload-artifact@v4
         with:

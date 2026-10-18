@@ -1,25 +1,31 @@
-# TpSetHome - Risugami ModLoader / Minecraft Alpha a1.0.16
+# TpSetHome - Minecraft Alpha a1.0.16 legacy port
 
 ## Status
 
-This directory is an isolated compatibility investigation for Minecraft Alpha a1.0.16. It is not yet a loadable mod JAR.
+This folder is isolated from all existing Forge and Fabric versions. It is currently a compatibility investigation, not a finished or tested mod.
 
-The repository's existing Forge and Fabric modules are intentionally untouched.
+## What the existing Alpha mods actually show
 
-## Compatibility blocker
+- Old-MC-Coordinates publishes a build named for Alpha a1.0.16. Its author describes it as a **jarmod** that replaces `GuiIngame.class`, and explicitly warns that Modrinth's loader metadata can be inaccurate for old releases. It is evidence that direct jar patching is used for this era, not proof that a normal Risugami ModLoader plugin API is available in a1.0.16.
+- Old-MC-Commands is also described as a jarmod for Alpha and Infdev, but its public repository contains builds for a1.0.9, a1.1.2_01, a1.2.6 and Infdev, not a verified a1.0.16 build.
 
-Risugami's documented ModLoader API references begin at Alpha 1.2.6, and historical ModLoader releases are documented for later Alpha/Beta versions. I have not verified an official Risugami ModLoader build for Alpha a1.0.16. A normal `mod_*.class` targeting a later ModLoader API therefore cannot honestly be advertised as compatible with a1.0.16.
+References:
+- https://github.com/Skellz64/Old-MC-Coordinates
+- https://modrinth.com/mod/coordinates-old-mc
+- https://github.com/Skellz64/Old-MC-Commands
 
-Before implementing the game integration, the exact loader build and target game's classes must be verified. If no compatible loader exists, the choices are to port ModLoader to a1.0.16 or use a separate legacy patching approach; the latter would not be a standard Risugami ModLoader mod.
+## Implementation approach
 
-## Planned implementation once compatibility is verified
+Do not assume a modern Forge/Fabric API or a later ModLoader API. The likely route for a1.0.16 is a version-specific jar patch, unless an actual compatible ModLoader binary and API can be verified.
 
-- Keep all work inside this directory until it builds and launches independently.
-- Implement `/sethome`, `/home`, and `/delhome` using APIs actually present in the verified target.
-- Use storage compatible with the target runtime rather than assuming modern Java NIO APIs exist.
-- Add a dedicated CI build only after the module has a real, verified loader dependency.
-- Do not change or remove any existing version modules.
+Before producing a patch, inspect the exact a1.0.16 client classes and identify:
+- where chat input is accepted and submitted;
+- how the local player position and world are represented;
+- how a teleport can safely update the local player;
+- where per-world or per-player home data can be persisted with APIs available in this old runtime.
 
-## Current validation
+Then implement `/sethome`, `/home`, and `/delhome` against those exact classes. Keep the patch and any build scripts inside this directory. Do not change existing version modules.
 
-No mod JAR is produced by this directory yet. A build result must not be treated as game compatibility until the mod loads in Minecraft Alpha a1.0.16 with the selected loader.
+## Validation
+
+No TpSetHome jar for Alpha a1.0.16 has been produced or tested yet. A successful compilation alone would not prove the patch works in-game; the resulting jar must be installed into a disposable Alpha a1.0.16 instance and tested there.

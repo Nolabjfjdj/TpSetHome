@@ -1,0 +1,59 @@
+name: Inspect Minecraft Alpha a1.0.16
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "risugami-a1.0.16/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-alpha:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "8"
+      - name: Download the exact Alpha client
+        shell: bash
+        run: |
+          set -euo pipefail
+          MANIFEST="$(curl -fsSL https://piston-meta.mojang.com/mc/game/version_manifest_v2.json)"
+          VERSION_URL="$(printf '%s' "$MANIFEST" | jq -r '.versions[] | select(.id == "a1.0.16") | .url' | head -n 1)"
+          test -n "$VERSION_URL"
+          VERSION_JSON="$(curl -fsSL "$VERSION_URL")"
+          CLIENT_URL="$(printf '%s' "$VERSION_JSON" | jq -r '.downloads.client.url // empty')"
+          if [ -z "$CLIENT_URL" ]; then
+            echo "The official manifest has no client download entry for a1.0.16."
+            exit 1
+          fi
+          mkdir -p build/alpha
+          curl -fsSL "$CLIENT_URL" -o build/alpha/a1.0.16-client.jar
+          printf '%s\n' "Downloaded official Alpha a1.0.16 client" > build/alpha/report.txt
+          printf 'Client SHA-1: ' >> build/alpha/report.txt
+          sha1sum build/alpha/a1.0.16-client.jar | awk '{print $1}' >> build/alpha/report.txt
+          printf '\nClasses relevant to chat/player/world:\n' >> build/alpha/report.txt
+          jar tf build/alpha/a1.0.16-client.jar | grep -Ei 'Minecraft.class|GuiChat.class|EntityPlayer|World.class|GuiIngame.class|ModLoader' >> build/alpha/report.txt || true
+          printf '\nMinecraft class structure:\n' >> build/alpha/report.txt
+          javap -classpath build/alpha/a1.0.16-client.jar -private -c net.minecraft.client.Minecraft >> build/alpha/report.txt 2>&1 || true
+          printf '\nCandidate classes containing chat/player methods:\n' >> build/alpha/report.txt
+          jar tf build/alpha/a1.0.16-client.jar | grep '\.class$' | head -n 2000 > build/alpha/classes.txt
+          while IFS= read -r entry; do
+            class="${entry%.class}"
+            class="${class//\//.}"
+            javap -classpath build/alpha/a1.0.16-client.jar -private "$class" 2>/dev/null | grep -E 'sendChatMessage|thePlayer|posX|posY|posZ|keyTyped|sendQueue|addChatMessage' && echo "CLASS=$class"
+          done < build/alpha/classes.txt >> build/alpha/report.txt || true
+      - name: Upload bytecode inspection report
+        uses: actions/upload-artifact@v4
+        with:
+          name: alpha-a1.0.16-bytecode-report
+          path: build/alpha/report.txt
+          if-no-files-found: error
+          retention-days: 14

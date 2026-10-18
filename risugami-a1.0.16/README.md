@@ -29,3 +29,10 @@ Then implement `/sethome`, `/home`, and `/delhome` against those exact classes. 
 ## Validation
 
 No TpSetHome jar for Alpha a1.0.16 has been produced or tested yet. A successful compilation alone would not prove the patch works in-game; the resulting jar must be installed into a disposable Alpha a1.0.16 instance and tested there.
+
+
+## Automated reverse-engineering step
+
+The dedicated workflow `.github/workflows/alpha-a1.0.16.yml` downloads the exact Alpha client from Mojang's version manifest, decompiles it in CI, and publishes a short report of the chat and player-coordinate code. This avoids guessing method names from newer Minecraft versions.
+
+The next implementation step is to use that report to identify the precise chat submission hook and player position fields, then build a patch JAR that contains only TpSetHome's changed classes. The workflow is an inspection step, not the mod build itself.

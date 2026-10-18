@@ -167,7 +167,7 @@ jobs:
           VERSION_JSON="$(curl -fsSL "$VERSION_URL")"
           CLIENT_URL="$(printf '%s' "$VERSION_JSON" | jq -r '.downloads.client.url')"
           CLIENT_SHA1="$(printf '%s' "$VERSION_JSON" | jq -r '.downloads.client.sha1')"
-          CACHE="$HOME/.gradle/caches/minecraft/net/minecraft"
+          CACHE="$GITHUB_WORKSPACE/forge-1.6.4/caches/minecraft/net/minecraft"
           mkdir -p "$CACHE/minecraft/1.6.4"
           curl -fsSL "$CLIENT_URL" -o "$CACHE/minecraft/1.6.4/minecraft-1.6.4.jar"
           echo "$CLIENT_SHA1  $CACHE/minecraft/1.6.4/minecraft-1.6.4.jar" | sha1sum -c -

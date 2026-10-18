@@ -49,12 +49,23 @@ jobs:
           grep -R -n -E '^[[:space:]]*(public|private|protected)?[[:space:]]*(double|float)[[:space:]]+[a-zA-Z_$][a-zA-Z0-9_$]*[[:space:]]*;' build/alpha/source >> build/alpha/report.txt || true
           printf '\nCanvas class signatures (ab):\n' >> build/alpha/report.txt
           javap -classpath build/alpha/a1.0.16-client.jar -private ab >> build/alpha/report.txt 2>&1 || true
+          printf '\nCanvas class signatures (ab):\n' >> build/alpha/report.txt
+          javap -classpath build/alpha/a1.0.16-client.jar -private ab >> build/alpha/report.txt 2>&1 || true
           printf '\nClasses and declarations using AWT key events:\n' >> build/alpha/report.txt
           grep -R -l 'KeyEvent' build/alpha/source --include='*.java' | while IFS= read -r file; do
             echo "SOURCE=$file" >> build/alpha/report.txt
             grep -n -E '^[[:space:]]*(public|private|protected).*\\(.*KeyEvent|^[[:space:]]*public class |^[[:space:]]*public abstract class ' "$file" >> build/alpha/report.txt || true
           done
-          printf '\nCurrent screen class signatures (jt):\n' >> build/alpha/report.txt
+          printf '\nClass and method declarations using char/int parameters:\n' >> build/alpha/report.txt
+          for file in build/alpha/source/*.java; do
+            if grep -q -E '^[[:space:]]*(public|private|protected).*\\([^)]*char[^)]*int|^[[:space:]]*(public|private|protected).*\\([^)]*int[^)]*char' "$file"; then
+              echo "SOURCE=$file" >> build/alpha/report.txt
+              grep -n -E '^[[:space:]]*(public|private|protected).*\\([^)]*char[^)]*int|^[[:space:]]*(public|private|protected).*\\([^)]*int[^)]*char|^[[:space:]]*public class |^[[:space:]]*public abstract class ' "$file" >> build/alpha/report.txt || true
+            fi
+          done
+          printf '\nCurrent screen class signatures (er):\n' >> build/alpha/report.txt
+          javap -classpath build/alpha/a1.0.16-client.jar -private er >> build/alpha/report.txt 2>&1 || true
+          printf '\nFont renderer signatures (jt):\n' >> build/alpha/report.txt
           javap -classpath build/alpha/a1.0.16-client.jar -private jt >> build/alpha/report.txt 2>&1 || true
           printf '\nMinecraft key dispatch references:\n' >> build/alpha/report.txt
           javap -classpath build/alpha/a1.0.16-client.jar -private -c net.minecraft.client.Minecraft 2>/dev/null | grep -E 'Method .*jt|Field .*jt|KeyEvent|invokevirtual .*\\(CI\\)V|invokevirtual .*\\(Ljava/awt/event/KeyEvent;\\)V' >> build/alpha/report.txt || true

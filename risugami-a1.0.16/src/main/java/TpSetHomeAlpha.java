@@ -100,24 +100,42 @@ public final class TpSetHomeAlpha {
     }
 
     private static String findCommandText(Object screen) {
+        return findCommandText(screen, 0);
+    }
+
+    private static String findCommandText(Object target, int depth) {
+        if (target == null || depth > 2) {
+            return null;
+        }
         String result = null;
-        Class<?> type = screen.getClass();
+        Class<?> type = target.getClass();
         while (type != null) {
             Field[] fields = type.getDeclaredFields();
             for (int i = 0; i < fields.length; i++) {
                 Field field = fields[i];
-                if (field.getType() == String.class && !Modifier.isStatic(field.getModifiers())) {
-                    try {
-                        field.setAccessible(true);
-                        Object value = field.get(screen);
-                        if (value instanceof String) {
-                            String text = ((String) value).trim();
-                            if (text.startsWith("/") && (result == null || text.length() > result.length())) {
-                                result = text;
+                if (Modifier.isStatic(field.getModifiers()) || field.getType().isPrimitive()) {
+                    continue;
+                }
+                try {
+                    field.setAccessible(true);
+                    Object value = field.get(target);
+                    if (value instanceof String) {
+                        String text = ((String) value).trim();
+                        if (text.startsWith("/") && (result == null || text.length() > result.length())) {
+                            result = text;
+                        }
+                    } else if (depth < 2 && value != null) {
+                        String name = value.getClass().getName();
+                        if (!name.startsWith("java.") && !name.startsWith("javax.") &&
+                            !name.startsWith("net.minecraft.client.Minecraft") &&
+                            !name.startsWith("java.awt.")) {
+                            String nested = findCommandText(value, depth + 1);
+                            if (nested != null && (result == null || nested.length() > result.length())) {
+                                result = nested;
                             }
                         }
-                    } catch (Throwable ignored) {
                     }
+                } catch (Throwable ignored) {
                 }
             }
             type = type.getSuperclass();

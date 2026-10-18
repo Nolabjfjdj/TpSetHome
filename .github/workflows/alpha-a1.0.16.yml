@@ -21,7 +21,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "8"
-      - name: Download the exact Alpha client
+      - name: Download and inspect the exact Alpha client
         shell: bash
         run: |
           set -euo pipefail
@@ -34,22 +34,19 @@ jobs:
             echo "The official manifest has no client download entry for a1.0.16."
             exit 1
           fi
-          mkdir -p build/alpha
+          mkdir -p build/alpha build/alpha/source
           curl -fsSL "$CLIENT_URL" -o build/alpha/a1.0.16-client.jar
           printf '%s\n' "Downloaded official Alpha a1.0.16 client" > build/alpha/report.txt
           printf 'Client SHA-1: ' >> build/alpha/report.txt
           sha1sum build/alpha/a1.0.16-client.jar | awk '{print $1}' >> build/alpha/report.txt
-          printf '\nClasses relevant to chat/player/world:\n' >> build/alpha/report.txt
+          printf '\nClass names related to chat/player/world:\n' >> build/alpha/report.txt
           jar tf build/alpha/a1.0.16-client.jar | grep -Ei 'Minecraft.class|GuiChat.class|EntityPlayer|World.class|GuiIngame.class|ModLoader' >> build/alpha/report.txt || true
-          printf '\nMinecraft class structure:\n' >> build/alpha/report.txt
-          javap -classpath build/alpha/a1.0.16-client.jar -private -c net.minecraft.client.Minecraft >> build/alpha/report.txt 2>&1 || true
-          printf '\nCandidate classes containing chat/player methods:\n' >> build/alpha/report.txt
-          jar tf build/alpha/a1.0.16-client.jar | grep '\.class$' | head -n 2000 > build/alpha/classes.txt
-          while IFS= read -r entry; do
-            class="${entry%.class}"
-            class="${class//\//.}"
-            javap -classpath build/alpha/a1.0.16-client.jar -private "$class" 2>/dev/null | grep -E 'sendChatMessage|thePlayer|posX|posY|posZ|keyTyped|sendQueue|addChatMessage' && echo "CLASS=$class"
-          done < build/alpha/classes.txt >> build/alpha/report.txt || true
+          curl -fsSL https://www.benf.org/other/cfr/cfr-0.152.jar -o build/alpha/cfr.jar
+          java -jar build/alpha/cfr.jar build/alpha/a1.0.16-client.jar --outputdir build/alpha/source --silent true
+          printf '\nDecompiled methods and fields relevant to chat/player coordinates:\n' >> build/alpha/report.txt
+          grep -R -n -E 'sendChatMessage|addChatMessage|thePlayer|posX|posY|posZ|keyTyped|GuiChat|class Minecraft' build/alpha/source >> build/alpha/report.txt || true
+          printf '\nMinecraft class declaration:\n' >> build/alpha/report.txt
+          javap -classpath build/alpha/a1.0.16-client.jar -private net.minecraft.client.Minecraft >> build/alpha/report.txt 2>&1 || true
       - name: Upload bytecode inspection report
         uses: actions/upload-artifact@v4
         with:

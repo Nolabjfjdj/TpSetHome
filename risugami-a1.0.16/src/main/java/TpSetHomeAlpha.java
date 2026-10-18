@@ -242,23 +242,33 @@ public final class TpSetHomeAlpha {
             Class<?> type = player.getClass();
             while (type != null) {
                 Method[] methods = type.getDeclaredMethods();
+                Method positionMethod = null;
                 for (int i = 0; i < methods.length; i++) {
                     Class<?>[] parameters = methods[i].getParameterTypes();
                     if (methods[i].getReturnType() == Void.TYPE && parameters.length == 3 &&
                         parameters[0] == Double.TYPE && parameters[1] == Double.TYPE && parameters[2] == Double.TYPE) {
-                        methods[i].setAccessible(true);
-                        methods[i].invoke(player, new Object[] { Double.valueOf(x), Double.valueOf(y), Double.valueOf(z) });
-                        Field[] coordinates = findCoordinateFields(player);
-                        if (coordinates != null) {
-                            coordinates[0].setDouble(player, x);
-                            coordinates[1].setDouble(player, y);
-                            coordinates[2].setDouble(player, z);
+                        if ("a".equals(methods[i].getName())) {
+                            positionMethod = methods[i];
+                            break;
                         }
-                        setOptionalDouble(player, "ah", x);
-                        setOptionalDouble(player, "ai", y);
-                        setOptionalDouble(player, "aj", z);
-                        return true;
+                        if (positionMethod == null) {
+                            positionMethod = methods[i];
+                        }
                     }
+                }
+                if (positionMethod != null) {
+                    positionMethod.setAccessible(true);
+                    positionMethod.invoke(player, new Object[] { Double.valueOf(x), Double.valueOf(y), Double.valueOf(z) });
+                    Field[] coordinates = findCoordinateFields(player);
+                    if (coordinates != null) {
+                        coordinates[0].setDouble(player, x);
+                        coordinates[1].setDouble(player, y);
+                        coordinates[2].setDouble(player, z);
+                    }
+                    setOptionalDouble(player, "ah", x);
+                    setOptionalDouble(player, "ai", y);
+                    setOptionalDouble(player, "aj", z);
+                    return true;
                 }
                 type = type.getSuperclass();
             }

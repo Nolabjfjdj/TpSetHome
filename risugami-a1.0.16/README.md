@@ -40,6 +40,6 @@ The first successful inspection confirms the chat input class is obfuscated as `
 
 ## Patch implementation
 
-The first patch implementation now targets the verified `ab.keyTyped(java.awt.event.KeyEvent)` hook in the official Alpha a1.0.16 client. The isolated patch contains only the modified `ab.class` and the TpSetHome handler; it does not bundle Mojang's client JAR. The handler implements a single saved home with `/sethome`, `/home`, and `/delhome`.
+The first compiled patch was rejected during review because `ab` is the AWT canvas, not the chat screen, so that archive must not be treated as a working release. The inspection workflow now searches the exact Alpha client's keyboard-event dispatch and current-screen classes to find the real chat input hook before rebuilding.
 
-The dedicated workflow compiles the patch and uploads a ZIP artifact. It still needs in-game testing in a disposable Alpha a1.0.16 instance before it can be called confirmed working. The Modrinth "Risugami's ModLoader" label is not treated as proof that this is a conventional ModLoader API mod; this implementation is a direct JAR patch.
+The eventual patch will contain only changed classes and TpSetHome's handler, not Mojang's client JAR. It must still be tested in a disposable Alpha a1.0.16 instance. The Modrinth "Risugami's ModLoader" label is not treated as proof that this is a conventional ModLoader API mod; this route is a direct JAR patch.

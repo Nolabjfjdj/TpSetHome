@@ -48,4 +48,11 @@ public final class HomeCommand extends CommandBase {
             homeCommands.delhome(player, args[0]);
         }
     }
+    @Override
+    public int compareTo(Object other) {
+        if (other instanceof net.minecraft.command.ICommand) {
+            return commandName.compareTo(((net.minecraft.command.ICommand) other).getCommandName());
+        }
+        return 0;
+    }
 }

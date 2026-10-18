@@ -67,8 +67,12 @@ jobs:
           javap -classpath build/alpha/a1.0.16-client.jar -private er >> build/alpha/report.txt 2>&1 || true
           printf '\nFont renderer signatures (jt):\n' >> build/alpha/report.txt
           javap -classpath build/alpha/a1.0.16-client.jar -private jt >> build/alpha/report.txt 2>&1 || true
-          printf '\nMinecraft key dispatch references:\n' >> build/alpha/report.txt
-          javap -classpath build/alpha/a1.0.16-client.jar -private -c net.minecraft.client.Minecraft 2>/dev/null | grep -E 'Method .*jt|Field .*jt|KeyEvent|invokevirtual .*\\(CI\\)V|invokevirtual .*\\(Ljava/awt/event/KeyEvent;\\)V' >> build/alpha/report.txt || true
+          printf '\nCanvas keyboard dispatch bytecode references:\n' >> build/alpha/report.txt
+          javap -classpath build/alpha/a1.0.16-client.jar -private -c ab 2>/dev/null | grep -E 'keyPressed|keyReleased|keyTyped|Method |Field |^[[:space:]]*[0-9]+:' >> build/alpha/report.txt || true
+          printf '\nMinecraft field N and likely screen class bb:\n' >> build/alpha/report.txt
+          javap -classpath build/alpha/a1.0.16-client.jar -private bb >> build/alpha/report.txt 2>&1 || true
+          printf '\nMinecraft keyboard dispatch references:\n' >> build/alpha/report.txt
+          javap -classpath build/alpha/a1.0.16-client.jar -private -c net.minecraft.client.Minecraft 2>/dev/null | grep -E 'Field .*bb|Field .*N|KeyEvent|invokevirtual .*\\(CI\\)V|invokevirtual .*\\(Ljava/awt/event/KeyEvent;\\)V' >> build/alpha/report.txt || true
           printf '\nLikely entity classes and inheritance signatures:\n' >> build/alpha/report.txt
           for class in ln jx fv he; do
             echo "CLASS=$class" >> build/alpha/report.txt

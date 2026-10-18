@@ -46,3 +46,6 @@ The eventual patch will contain only changed classes and TpSetHome's handler, no
 
 
 The current bytecode inspection found that the canvas class receives AWT key events, while the font renderer is a separate class. The next build is mapping the keyboard dispatch to the active screen's text-entry method. Do not install the first patch artifact; it was compiled successfully but did not target the actual chat input.
+
+
+The latest inspection is checking the AWT canvas's `keyPressed` path and the active-screen class before selecting the bytecode injection point. The currently generated ZIP remains a diagnostic prototype only, not a usable mod.

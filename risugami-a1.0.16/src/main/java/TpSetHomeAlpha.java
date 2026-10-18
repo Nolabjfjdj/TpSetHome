@@ -6,15 +6,14 @@ import java.io.FileWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.awt.event.KeyEvent;
 
 public final class TpSetHomeAlpha {
     private TpSetHomeAlpha() {
     }
 
-    public static boolean handle(Object screen, Object event) {
+    public static boolean handle(Object screen, char typedChar, int keyCode) {
         try {
-            if (!(event instanceof KeyEvent) || ((KeyEvent) event).getKeyCode() != KeyEvent.VK_ENTER) {
+            if (keyCode != 10 && keyCode != 13 && keyCode != 28 && typedChar != '\n' && typedChar != '\r') {
                 return false;
             }
             String input = findCommandText(screen);

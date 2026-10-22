@@ -1,0 +1,46 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.107'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = 'TpSetHome-NeoForge-1.21.5'
+}
+
+neoForge {
+    version = project.neoforge_version
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+    }
+    mods {
+        sethomemod {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':common')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}

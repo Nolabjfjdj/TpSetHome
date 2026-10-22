@@ -64,6 +64,8 @@ jobs:
             java: '17'
           - module: forge-1.21.4
             java: '21'
+          - module: neoforge-1.21.4
+            java: '21'
           - module: forge-1.21.5
             java: '21'
           - module: neoforge-1.21.5

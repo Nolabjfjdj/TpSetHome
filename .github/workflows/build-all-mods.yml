@@ -100,11 +100,11 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
 
-      - name: Install Gradle 9.3.1
+      - name: Install Gradle 8.14.3
         run: |
-          curl --fail --location --retry 3 https://services.gradle.org/distributions/gradle-9.3.1-bin.zip --output /tmp/gradle.zip
+          curl --fail --location --retry 3 https://services.gradle.org/distributions/gradle-8.14.3-bin.zip --output /tmp/gradle.zip
           unzip -q /tmp/gradle.zip -d "$HOME"
-          echo "$HOME/gradle-9.3.1/bin" >> "$GITHUB_PATH"
+          echo "$HOME/gradle-8.14.3/bin" >> "$GITHUB_PATH"
 
       - name: Build module
         run: gradle --no-daemon -PtargetModule=${{ matrix.module }} :${{ matrix.module }}:build

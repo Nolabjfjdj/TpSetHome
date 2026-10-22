@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="sethomemod"
+version="1.0.0"
+displayName="TpSetHome"
+authors="NolanLaBanane415"
+description='''Un mod utilitaire pour enregistrer, retrouver et supprimer des points de téléportation.'''
+
+[[dependencies.sethomemod]]
+modId="neoforge"
+type="required"
+versionRange="[21.5,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.sethomemod]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.5,1.21.6)"
+ordering="NONE"
+side="BOTH"
